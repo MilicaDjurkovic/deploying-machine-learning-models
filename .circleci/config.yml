@@ -301,7 +301,6 @@ workflows:
               only:
                 - master 
  
-
 #  test-all:
 #    jobs:
 #      - test_regression_model_py36
