@@ -287,7 +287,6 @@ workflows:
               - master
               - demo
 
-  test-all:
     jobs:
       # - test_regression_model_py36
       - test_regression_model_py37
