@@ -95,18 +95,18 @@ jobs:
             cd section-08-deploying-with-containers && railway up --service=normal-sofa --detach
 
   test_regression_model_py39:
-  docker:
-    - image: circleci/python:3.9.5
-  working_directory: ~/project/packages/regression_model
-  steps:
-    - checkout:
-        path: ~/project
-    - run:
-          name: Run tests with Python 3.9
-          command: |
-            sudo pip install --upgrade pip
-            pip install --user tox
-            tox -e py39
+    docker:
+      - image: circleci/python:3.9.5
+    working_directory: ~/project/packages/regression_model
+    steps:
+      - checkout:
+          path: ~/project
+      - run:
+            name: Run tests with Python 3.9
+            command: |
+              sudo pip install --upgrade pip
+              pip install --user tox
+              tox -e py39
 
   test_ml_api_py39:
     docker:
