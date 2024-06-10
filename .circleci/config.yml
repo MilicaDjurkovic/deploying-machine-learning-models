@@ -122,8 +122,12 @@ jobs:
       - run:
             name: Run API tests with Python 3.9
             command: |
+              sudo pip uninstall -y virtualenv
+              sudo pip install virtualenv
               sudo pip install --upgrade pip
-              pip install --user tox
+              pip install --upgrade poetry
+              pip install --upgrade requests
+              pip install --user tox 
               tox -e py39
 
   train_and_upload_regression_model:
