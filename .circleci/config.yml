@@ -104,7 +104,7 @@ jobs:
       - run:
             name: Run tests with Python 3.9
             command: |
-              pip uninstall --user tox virtualenv
+              pip uninstall virtualenv
               sudo pip uninstall virtualenv
               sudo pip install virtualenv
               sudo pip install --upgrade pip
