@@ -104,7 +104,6 @@ jobs:
       - run:
             name: Run tests with Python 3.9
             command: |
-              pip uninstall -y virtualenv
               sudo pip uninstall -y virtualenv
               sudo pip install virtualenv
               sudo pip install --upgrade pip
