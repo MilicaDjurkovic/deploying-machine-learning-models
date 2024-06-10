@@ -109,7 +109,7 @@ jobs:
               sudo pip install --upgrade pip
               pip install --upgrade poetry
               pip install --upgrade requests
-              pip install --user tox --use-deprecated=legacy-resolver
+              pip install --user tox 
               tox -e py39
 
   test_ml_api_py39:
