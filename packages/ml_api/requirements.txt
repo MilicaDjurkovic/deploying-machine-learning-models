@@ -15,3 +15,8 @@ neural_network_model==0.1.1
 
 # Deployment
 gunicorn==19.9.0
+
+# Additional dependencies
+Cython==0.29.21
+clikit==0.6.2
+crashtest==0.3.1
