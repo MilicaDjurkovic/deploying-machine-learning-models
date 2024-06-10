@@ -108,19 +108,19 @@ jobs:
             pip install --user tox
             tox -e py39
 
-test_ml_api_py39:
-  docker:
-    - image: circleci/python:3.9.5
-  working_directory: ~/project/packages/ml_api
-  steps:
-    - checkout:
-        path: ~/project
-    - run:
-          name: Run API tests with Python 3.9
-          command: |
-            sudo pip install --upgrade pip
-            pip install --user tox
-            tox -e py39
+  test_ml_api_py39:
+    docker:
+      - image: circleci/python:3.9.5
+    working_directory: ~/project/packages/ml_api
+    steps:
+      - checkout:
+          path: ~/project
+      - run:
+            name: Run API tests with Python 3.9
+            command: |
+              sudo pip install --upgrade pip
+              pip install --user tox
+              tox -e py39
 
   train_and_upload_regression_model:
     <<: *defaults
