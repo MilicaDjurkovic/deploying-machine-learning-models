@@ -104,7 +104,7 @@ jobs:
       - run:
             name: Run tests with Python 3.9
             command: |
-              sudo pip install --use-deprecated=legacy-resolver
+#              sudo pip install --use-deprecated=legacy-resolver
               pip install --user tox --use-deprecated=legacy-resolver
               tox -e py39
 
