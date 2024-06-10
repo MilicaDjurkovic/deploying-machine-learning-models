@@ -104,8 +104,8 @@ jobs:
       - run:
             name: Run tests with Python 3.9
             command: |
-              pip uninstall virtualenv
-              sudo pip uninstall virtualenv
+              pip uninstall -y virtualenv
+              sudo pip uninstall -y virtualenv
               sudo pip install virtualenv
               sudo pip install --upgrade pip
               pip install --upgrade poetry
