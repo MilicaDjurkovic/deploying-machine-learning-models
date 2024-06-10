@@ -1,3 +1,4 @@
+from typing import Optional
 from pathlib import Path
 from typing import Dict, List, Optional, Sequence
 

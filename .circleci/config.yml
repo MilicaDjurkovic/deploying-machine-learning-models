@@ -94,61 +94,33 @@ jobs:
           command: |
             cd section-08-deploying-with-containers && railway up --service=normal-sofa --detach
 
-  test_regression_model_py37:
+  test_regression_model_py39:
     docker:
-      - image: circleci/python:3.7.6
+      - image: circleci/python:3.9.5
     working_directory: ~/project/packages/regression_model
     steps:
       - checkout:
           path: ~/project
       - run:
-          name: Run tests with Python 3.7
-          command: |
-            sudo pip install --upgrade pip
-            pip install --user tox
-            tox -e py37
+            name: Run tests with Python 3.9
+            command: |
+              sudo pip install --use-deprecated=legacy-resolver
+              pip install --user tox --use-deprecated=legacy-resolver
+              tox -e py39
 
-  test_regression_model_py38:
+  test_ml_api_py39:
     docker:
-      - image: circleci/python:3.8.0
-    working_directory: ~/project/packages/regression_model
-    steps:
-      - checkout:
-          path: ~/project
-      - run:
-          name: Run tests with Python 3.8
-          command: |
-            sudo pip install --upgrade pip
-            pip install --user tox
-            tox -e py38
-
-  test_ml_api_py37:
-    docker:
-      - image: circleci/python:3.7.6
+      - image: circleci/python:3.9.5
     working_directory: ~/project/packages/ml_api
     steps:
       - checkout:
           path: ~/project
       - run:
-          name: Run API tests with Python 3.7
-          command: |
-            sudo pip install --upgrade pip
-            pip install --user tox
-            tox -e py37
-
-  test_ml_api_py38:
-    docker:
-      - image: circleci/python:3.8.1
-    working_directory: ~/project/packages/ml_api
-    steps:
-      - checkout:
-          path: ~/project
-      - run:
-          name: Run API tests with Python 3.8
-          command: |
-            sudo pip install --upgrade pip
-            pip install --user tox
-            tox -e py38
+            name: Run API tests with Python 3.9
+            command: |
+              sudo pip install --upgrade pip
+              pip install --user tox
+              tox -e py39
 
   train_and_upload_regression_model:
     <<: *defaults
@@ -227,7 +199,7 @@ jobs:
 
   section_13_train_and_upload_neural_network_model:
     docker:
-      - image: circleci/python:3.6.4-stretch
+      - image: cimg/python:3.9.5
     working_directory: ~/project
     steps:
       - checkout
@@ -287,27 +259,22 @@ workflows:
               - master
               - demo
 
-#  test-all:
-#    jobs:
-#      - test_regression_model_py36
-#      - test_regression_model_py37
-#      - test_regression_model_py38
-#      - test_ml_api_py36
-#      - test_ml_api_py37
-#      # - test_ml_api_py38 pending NN model update
-#      - section_9_differential_tests
-#      - train_and_upload_regression_model:
-#          requires:
-#            - test_regression_model_py36
-#            - test_regression_model_py37
-#            - test_regression_model_py38
-#            - test_ml_api_py36
-#            - test_ml_api_py37
-#            - section_9_differential_tests
-#          filters:
-#            branches:
-#              only:
-#                - master
+      # - test_regression_model_py36
+      - test_regression_model_py39
+      - test_ml_api_py39
+      # - test_ml_api_py38 pending NN model update
+      - section_9_differential_tests
+      - train_and_upload_regression_model:
+          requires:
+          #  - test_regression_model_py36
+            - test_regression_model_py39
+            # - test_ml_api_py36
+            - test_ml_api_py39
+            - section_9_differential_tests
+          filters:
+            branches:
+              only:
+                - master
 #       - section_10_deploy_to_heroku:
 #           requires:
 #             - train_and_upload_regression_model

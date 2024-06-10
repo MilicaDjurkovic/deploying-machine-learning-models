@@ -3,7 +3,7 @@
 # updates/fixes, whilst ensuring we don't install a major update which could introduce backwards incompatible changes.
 
 # Model Building Requirements
-numpy>=1.18.1,<1.19.0
+numpy>=1.18.1,<1.20.0
 pandas>=0.25.3,<0.26.0
 scikit-learn>=0.22.1,<0.23.0
 joblib>=0.14.1,<0.15.0
@@ -17,3 +17,6 @@ wheel>=0.33.6,<0.34.0
 
 # fetching datasets
 kaggle>=1.5.6,<1.6.0
+
+# Additional dependencies
+Cython==0.29.21
