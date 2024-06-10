@@ -3,6 +3,8 @@
 # updates/fixes, whilst ensuring we don't install a major update which could introduce backwards incompatible changes.
 
 # Model Building Requirements
+packaging<21.0,>=20.4
+chardet<5,>=3.0.2
 numpy>=1.18.1,<1.20.0
 pandas>=0.25.3,<0.26.0
 scikit-learn>=0.22.1,<0.23.0
