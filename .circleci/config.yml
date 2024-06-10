@@ -128,6 +128,7 @@ jobs:
               pip install --upgrade poetry
               pip install --upgrade requests
               pip install --user tox 
+              export PIP_EXTRA_INDEX_URL=${PIP_EXTRA_INDEX_URL}
               tox -e py39
 
   train_and_upload_regression_model:
