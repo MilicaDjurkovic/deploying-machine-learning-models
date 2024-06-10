@@ -104,6 +104,9 @@ jobs:
       - run:
             name: Run tests with Python 3.9
             command: |
+              sudo pip install --upgrade pip
+              pip install --upgrade poetry
+              pip install --upgrade requests
               pip install --user tox --use-deprecated=legacy-resolver
               tox -e py39
 
