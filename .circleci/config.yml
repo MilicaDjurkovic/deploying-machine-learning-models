@@ -104,8 +104,8 @@ jobs:
       - run:
             name: Run tests with Python 3.9
             command: |
-              sudo pip install --upgrade pip
-              pip install --user tox
+              sudo pip install --upgrade pip --use-deprecated=legacy-resolver
+              pip install --user tox --use-deprecated=legacy-resolver
               tox -e py39
 
   test_ml_api_py39:
