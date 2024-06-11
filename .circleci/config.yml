@@ -144,7 +144,11 @@ jobs:
           command: |
             . venv/bin/activate
             pip install -r requirements.txt
-      - *fetch_data
+      - run:
+          name: Fetch data
+          command: |
+            . venv/bin/activate
+            tox -e fetch_data
       - run:
           name: Train model
           command: |
