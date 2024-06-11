@@ -141,7 +141,10 @@ jobs:
           command: |
             . venv/bin/activate
             pip install -r packages/regression_model/requirements.txt
-      - *fetch_data
+      - run:
+          name: Fetch the data
+          command: |
+            tox -e fetch_data
       - run: 
           name: Train model
           command: |
