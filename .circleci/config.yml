@@ -133,11 +133,16 @@ jobs:
   train_and_upload_regression_model:
     docker:
       - image: circleci/python:3.9.5
-    working_directory: ~/project/packages/regression_model
     steps:
       - checkout
-      - *prepare_tox
-      - *prepare_venv
+      - run:
+          name: Prepare tox
+          command: |
+            pip install tox
+      - run:
+          name: Prepare virtual environment
+          command: |
+            python -m venv venv
       - run: 
           name: Install requirements
           command: |
@@ -146,6 +151,8 @@ jobs:
       - run:
           name: Fetch the data
           command: |
+            . venv/bin/activate
+            cd packages/regression_model
             tox -e fetch_data
       - run: 
           name: Train model
