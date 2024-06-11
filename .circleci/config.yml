@@ -143,6 +143,11 @@ jobs:
       - *prepare_tox
       - *prepare_venv
       - run:
+          name: Setup Kaggle credentials
+          command: |
+            chmod +x ../../scripts/setup_kaggle.sh
+            ../../scripts/setup_kaggle.sh
+      - run:
           name: Install requirements
           command: |
             . venv/bin/activate
@@ -156,13 +161,13 @@ jobs:
           name: Train model
           command: |
             . venv/bin/activate
-            PYTHONPATH=./ python3 train_pipeline.py
+            PYTHONPATH=./ python3 regression_model/train_pipeline.py
       - run:
           name: Publish model to Gemfury
           command: |
             . venv/bin/activate
-            chmod +x ./scripts/publish_model.sh
-            ./scripts/publish_model.sh ./packages/regression_model/
+            chmod +x ../../scripts/publish_model.sh
+            ../../scripts/publish_model.sh .
 
   section_9_differential_tests:
     <<: *defaults
