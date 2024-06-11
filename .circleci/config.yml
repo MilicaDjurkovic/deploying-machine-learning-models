@@ -25,9 +25,13 @@ fetch_data: &fetch_data
   run:
     name: Set script permissions and fetch data
     command: |
-      source venv/bin/activate
-      chmod +x ./scripts/fetch_kaggle_dataset.sh
-      ./scripts/fetch_kaggle_dataset.sh
+        source venv/bin/activate
+        echo "Current directory:"
+        pwd
+        echo "Directory contents:"
+        ls -la
+        chmod +x ./scripts/fetch_kaggle_dataset.sh
+        ./scripts/fetch_kaggle_dataset.sh
 
 jobs:
   section_07_test_app:
