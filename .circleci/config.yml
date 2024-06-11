@@ -145,6 +145,19 @@ jobs:
             pip install -r packages/regression_model/requirements.txt
       - *fetch_data
       - run:
+          name: List datasets directory
+          command: |
+            ls -l regression_model/datasets/
+      - run:
+          name: Verify train.csv presence
+          command: |
+            if [ -f regression_model/datasets/train.csv ]; then
+              echo "train.csv file exists."
+            else
+              echo "train.csv file does not exist."
+              exit 1
+            fi
+      - run:
           name: Train model
           command: |
             . venv/bin/activate
