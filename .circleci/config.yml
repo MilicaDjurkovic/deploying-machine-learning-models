@@ -131,7 +131,8 @@ jobs:
               tox -e py39
 
   train_and_upload_regression_model:
-    <<: *defaults
+    docker:
+      - image: circleci/python:3.9.5
     steps:
       - checkout
       - *prepare_venv
