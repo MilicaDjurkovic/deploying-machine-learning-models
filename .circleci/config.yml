@@ -141,19 +141,19 @@ jobs:
           name: Install requirements
           command: |
             . venv/bin/activate
-            pip install -r packages/regression_model/requirements.txt
+            pip install -r requirements.txt
       - *fetch_data
       - run:
           name: Train model
           command: |
             . venv/bin/activate
-            PYTHONPATH=./packages/regression_model python3 regression_model/train_pipeline.py
+            PYTHONPATH=./ python3 train_pipeline.py
       - run:
           name: Publish model to Gemfury
           command: |
             . venv/bin/activate
             chmod +x ./scripts/publish_model.sh
-            ./scripts/publish_model.sh ./packages/regression_model/
+            ./scripts/publish_model.sh .
 
   section_9_differential_tests:
     <<: *defaults
