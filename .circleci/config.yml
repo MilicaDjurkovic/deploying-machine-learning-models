@@ -143,7 +143,7 @@ jobs:
           name: Install requirements
           command: |
             . venv/bin/activate
-            pip install -r packages/regression_model/requirements.txt
+            pip install -r requirements.txt
       - *fetch_data
       - run:
           name: Train model
