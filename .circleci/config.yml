@@ -14,6 +14,7 @@ prepare_venv: &prepare_venv
       python -m venv venv
       source venv/bin/activate
       pip install --upgrade pip
+      pip install virtualenv --upgrade
 
 prepare_tox: &prepare_tox
   run:
