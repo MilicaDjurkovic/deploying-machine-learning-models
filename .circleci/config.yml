@@ -115,10 +115,9 @@ jobs:
             pip install requests
             pip install tox
       - run:
-        name: List Files for Debugging
-        command: |
-          find ~/project -type f
-
+          name: List Files for Debugging
+          command: |
+            find ~/project -type f
       - run:
           name: Run tests with Python 3.9
           command: |
