@@ -136,7 +136,6 @@ jobs:
   train_and_upload_regression_model:
     docker:
       - image: circleci/python:3.9.5
-    working_directory: ~/project/packages/regression_model
     steps:
       - checkout
       - *prepare_venv
@@ -150,7 +149,7 @@ jobs:
           name: Train model
           command: |
             . venv/bin/activate
-            PYTHONPATH=./ python3 regression_model/train_pipeline.py
+            PYTHONPATH=./packages/regression_model python3 packages/regression_model/regression_model/train_pipeline.py
       - run: 
           name: Publish model to Gemfury
           command: |
