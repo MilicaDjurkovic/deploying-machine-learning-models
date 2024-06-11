@@ -30,8 +30,8 @@ fetch_data: &fetch_data
         pwd
         echo "Directory contents:"
         ls -la
-        chmod +x ./scripts/fetch_kaggle_dataset.sh
-        ./scripts/fetch_kaggle_dataset.sh
+        chmod +x ../../scripts/fetch_kaggle_dataset.sh
+        ../../scripts/fetch_kaggle_dataset.sh
 
 jobs:
   section_07_test_app:
@@ -141,6 +141,11 @@ jobs:
     steps:
       - checkout:
           path: ~/project
+      - run:
+          name: Print working directory and contents
+          command: |
+            pwd
+            ls -la 
       - *prepare_tox
       - *prepare_venv
       - run:
@@ -158,8 +163,8 @@ jobs:
           name: Publish model to Gemfury
           command: |
             . venv/bin/activate
-            chmod +x ./scripts/publish_model.sh
-            ./scripts/publish_model.sh .
+            chmod +x ../../scripts/publish_model.sh
+            ../../scripts/publish_model.sh .
 
   section_9_differential_tests:
     <<: *defaults
