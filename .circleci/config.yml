@@ -133,6 +133,7 @@ jobs:
   train_and_upload_regression_model:
     docker:
       - image: circleci/python:3.9.5
+    working_directory: ~/project/packages/regression_model
     steps:
       - checkout
       - *prepare_tox
