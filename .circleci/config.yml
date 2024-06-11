@@ -115,10 +115,9 @@ jobs:
             pip install requests
             pip install tox
       - run:
-          name: Copy Model File
-          command: |
-            mkdir -p regression_model/trained_models
-            cp /path_to_your_model/lasso_regression_output_v2.0.20.pkl regression_model/trained_models/
+        name: List Files for Debugging
+        command: |
+          find ~/project -type f
 
       - run:
           name: Run tests with Python 3.9
