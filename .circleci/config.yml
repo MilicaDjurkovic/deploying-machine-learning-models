@@ -143,11 +143,6 @@ jobs:
       - *prepare_tox
       - *prepare_venv
       - run:
-          name: Setup Kaggle credentials
-          command: |
-            chmod +x ../../scripts/setup_kaggle.sh
-            ../../scripts/setup_kaggle.sh
-      - run:
           name: Install requirements
           command: |
             . venv/bin/activate
