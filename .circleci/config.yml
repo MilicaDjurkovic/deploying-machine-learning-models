@@ -98,27 +98,27 @@ jobs:
             cd section-08-deploying-with-containers && railway up --service=normal-sofa --detach
 
   test_regression_model_py39:
-  docker:
-    - image: circleci/python:3.9.5
-  working_directory: ~/project/packages/regression_model
-  steps:
-    - checkout:
-        path: ~/project
-    - run:
-        name: Setup Python Environment and Install Dependencies
-        command: |
-          python -m venv env
-          source env/bin/activate
-          pip install --upgrade pip
-          pip install virtualenv
-          pip install poetry
-          pip install requests
-          pip install tox
-    - run:
-        name: Run tests with Python 3.9
-        command: |
-          source env/bin/activate
-          tox -e py39
+    docker:
+      - image: circleci/python:3.9.5
+    working_directory: ~/project/packages/regression_model
+    steps:
+      - checkout:
+          path: ~/project
+      - run:
+          name: Setup Python Environment and Install Dependencies
+          command: |
+            python -m venv env
+            source env/bin/activate
+            pip install --upgrade pip
+            pip install virtualenv
+            pip install poetry
+            pip install requests
+            pip install tox
+      - run:
+          name: Run tests with Python 3.9
+          command: |
+            source env/bin/activate
+            tox -e py39
 
   test_ml_api_py39:
     docker:
