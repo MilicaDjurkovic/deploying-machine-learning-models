@@ -13,8 +13,10 @@ prepare_venv: &prepare_venv
     command: |
       python -m venv venv
       source venv/bin/activate
+      sudo pip uninstall -y virtualenv
+      sudo pip install virtualenv
       pip install --upgrade pip
-      pip install virtualenv --upgrade
+      
 
 prepare_tox: &prepare_tox
   run:
