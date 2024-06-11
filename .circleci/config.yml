@@ -25,13 +25,9 @@ fetch_data: &fetch_data
   run:
     name: Set script permissions and fetch data
     command: |
-        source venv/bin/activate
-        echo "Current directory:"
-        pwd
-        echo "Directory contents:"
-        ls -la
-        chmod +x ../../scripts/fetch_kaggle_dataset.sh
-        ../../scripts/fetch_kaggle_dataset.sh
+      source venv/bin/activate
+      chmod +x ./scripts/fetch_kaggle_dataset.sh
+      ./scripts/fetch_kaggle_dataset.sh
 
 jobs:
   section_07_test_app:
@@ -141,30 +137,25 @@ jobs:
     steps:
       - checkout:
           path: ~/project
-      - run:
-          name: Print working directory and contents
-          command: |
-            pwd
-            ls -la 
       - *prepare_tox
       - *prepare_venv
       - run:
           name: Install requirements
           command: |
             . venv/bin/activate
-            pip install -r requirements.txt
+            pip install -r packages/regression_model/requirements.txt
       - *fetch_data
       - run:
           name: Train model
           command: |
             . venv/bin/activate
-            PYTHONPATH=./ python3 regression_model/train_pipeline.py
+            PYTHONPATH=./packages/regression_model python3 packages/regression_model/regression_model/train_pipeline.py
       - run:
           name: Publish model to Gemfury
           command: |
             . venv/bin/activate
-            chmod +x ../../scripts/publish_model.sh
-            ../../scripts/publish_model.sh .
+            chmod +x ./scripts/publish_model.sh
+            ./scripts/publish_model.sh ./packages/regression_model/
 
   section_9_differential_tests:
     <<: *defaults
