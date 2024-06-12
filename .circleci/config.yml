@@ -113,6 +113,11 @@ jobs:
           pip install --upgrade poetry
           pip install --upgrade requests
           pip install --user tox 
+      - run:
+        name: Run tests with Python 3.9
+        command: |
+          source venv/bin/activate
+          tox -e py39
 
   test_ml_api_py39:
     docker:
