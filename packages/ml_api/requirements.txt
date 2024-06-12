@@ -13,5 +13,5 @@ regression-model==2.0.20
 # Deployment
 gunicorn==19.9.0
 
-# crashtest<0.5.0,>=0.4.1
-# markupsafe==2.0.1
+crashtest<0.5.0,>=0.4.1
+markupsafe==2.0.1
