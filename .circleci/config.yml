@@ -224,6 +224,15 @@ jobs:
     steps:
       - checkout
       - *prepare_venv
+      - run:
+          name: Set up environment
+          command: |
+            sudo pip uninstall -y virtualenv
+            sudo pip install virtualenv
+            sudo pip install --upgrade pip
+            pip install --upgrade poetry
+            pip install --upgrade requests
+            pip install --user tox
       - run: 
           name: Install requirements
           command: |
