@@ -97,7 +97,7 @@ jobs:
           command: |
             cd section-08-deploying-with-containers && railway up --service=normal-sofa --detach
 
-  test_regression_model_py39:
+  """test_regression_model_py39:
     docker:
       - image: circleci/python:3.9.5
     working_directory: ~/project/packages/regression_model
@@ -113,9 +113,9 @@ jobs:
               pip install --upgrade poetry
               pip install --upgrade requests
               pip install --user tox 
-              tox -e py39
+              tox -e py39"""
 
-  test_ml_api_py39:
+  """test_ml_api_py39:
     docker:
       - image: circleci/python:3.9.5
     working_directory: ~/project/packages/ml_api
@@ -131,9 +131,9 @@ jobs:
               pip install --upgrade poetry
               pip install --upgrade requests
               pip install --user tox 
-              tox -e py39
+              tox -e py39"""
 
-  train_and_upload_regression_model:
+  """train_and_upload_regression_model:
     docker:
       - image: circleci/python:3.9.5
     working_directory: ~/project/packages/regression_model
@@ -162,7 +162,7 @@ jobs:
           command: |
             . venv/bin/activate
             chmod +x ../../scripts/publish_model.sh
-            ../../scripts/publish_model.sh .
+            ../../scripts/publish_model.sh ."""
 
   section_9_differential_tests:
     <<: *defaults
@@ -254,6 +254,53 @@ tags_only: &tags_only
     tags:
       only: /^.*/
 
+combined_job:
+  docker:
+    - image: circleci/python:3.9.5
+  working_directory: ~/project
+  steps:
+    - checkout
+    - run:
+        name: Set up environment
+        command: |
+          sudo pip uninstall -y virtualenv
+          sudo pip install virtualenv
+          sudo pip install --upgrade pip
+          pip install --upgrade poetry
+          pip install --upgrade requests
+          pip install --user tox
+    - run:
+        name: Train and upload regression model
+        command: |
+          cd packages/regression_model
+          virtualenv venv
+          . venv/bin/activate
+          pip install -r requirements.txt
+          tox -e fetch_data
+          PYTHONPATH=./ python3 regression_model/train_pipeline.py
+          chmod +x ../../scripts/publish_model.sh
+          ../../scripts/publish_model.sh .
+    - run:
+        name: Test regression model with Python 3.9
+        command: |
+          cd packages/regression_model
+          tox -e py39
+    - run:
+        name: Test ML API with Python 3.9
+        command: |
+          cd packages/ml_api
+          tox -e py39
+    - run:
+        name: Run differential tests
+        command: |
+          cd packages/ml_api
+          virtualenv venv
+          . venv/bin/activate
+          pip install -r diff_test_requirements.txt
+          PYTHONPATH=./ python3 tests/capture_model_predictions.py
+          pip install -r requirements.txt
+          py.test -vv tests -m differential
+
 workflows:
   version: 2
   deploy_pipeline:
@@ -277,23 +324,9 @@ workflows:
             only:
               - master
               - demo
-              
-      # - test_regression_model_py36
-      - train_and_upload_regression_model
-      - test_regression_model_py39:
-          requires:
-            - train_and_upload_regression_model
-      - test_ml_api_py39:
-          requires:
-            - train_and_upload_regression_model
-      # - test_ml_api_py38 pending NN model update
-      - section_9_differential_tests:
-          requires:
-            - train_and_upload_regression_model
-          filters:
-            branches:
-              only:
-                - master
+  test-all:
+    jobs:
+      - combined_job
 #       - section_10_deploy_to_heroku:
 #           requires:
 #             - train_and_upload_regression_model
