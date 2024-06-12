@@ -109,7 +109,6 @@ jobs:
           command: |
             source venv/bin/activate
             pip install --upgrade pip
-            pip install --extra-index-url https://milicadjurkovic:cupxRRSePKjzqNEur2Fr@pypi.fury.io/milicadjurkovic/ regression-model==2.0.20
             pip install --upgrade poetry
             pip install --upgrade requests
             pip install --user tox 
