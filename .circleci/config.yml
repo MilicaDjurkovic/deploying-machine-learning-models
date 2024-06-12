@@ -105,24 +105,15 @@ jobs:
       - checkout:
           path: ~/project
       - run:
-          name: Setup Python Environment and Install Dependencies
-          command: |
-            python -m venv env
-            source env/bin/activate
-            pip install --upgrade pip
-            pip install virtualenv
-            pip install poetry
-            pip install requests
-            pip install tox
-      - run:
-          name: List Files for Debugging
-          command: |
-            find ~/project -type f
-      - run:
-          name: Run tests with Python 3.9
-          command: |
-            source env/bin/activate
-            tox -e py39
+            name: Run tests with Python 3.9
+            command: |
+              sudo pip uninstall -y virtualenv
+              sudo pip install virtualenv
+              sudo pip install --upgrade pip
+              pip install --upgrade poetry
+              pip install --upgrade requests
+              pip install --user tox 
+              tox -e py39
 
   test_ml_api_py39:
     docker:

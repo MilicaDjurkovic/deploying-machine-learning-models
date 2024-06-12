@@ -23,3 +23,4 @@ kaggle>=1.5.6,<1.6.0
 Cython==0.29.21
 clikit==0.6.2
 crashtest>=0.3.0,<0.4.0
+regression-model==2.0.20
