@@ -225,6 +225,14 @@ jobs:
     docker:
       - image: cimg/python:3.9.5
     working_directory: ~/project
+    - run:
+        name: Create and activate virtual environment
+        command: |
+          python -m venv venv
+          . venv/bin/activate
+          pip uninstall -y virtualenv
+          pip install virtualenv
+          pip install --upgrade pip
     steps:
       - checkout
       - *prepare_tox
