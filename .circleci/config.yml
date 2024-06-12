@@ -247,6 +247,52 @@ jobs:
             chmod +x ./scripts/publish_model.sh
             ./scripts/publish_model.sh ./packages/neural_network_model/
 
+  combined_job:
+    docker:
+      - image: circleci/python:3.9.5
+    working_directory: ~/project
+    steps:
+      - checkout
+      - run:
+          name: Set up environment
+          command: |
+            sudo pip uninstall -y virtualenv
+            sudo pip install virtualenv
+            sudo pip install --upgrade pip
+            pip install --upgrade poetry
+            pip install --upgrade requests
+            pip install --user tox
+      - run:
+          name: Train and upload regression model
+          command: |
+            cd packages/regression_model
+            virtualenv venv
+            . venv/bin/activate
+            pip install -r requirements.txt
+            tox -e fetch_data
+            PYTHONPATH=./ python3 regression_model/train_pipeline.py
+            chmod +x ../../scripts/publish_model.sh
+            ../../scripts/publish_model.sh .
+      - run:
+          name: Test regression model with Python 3.9
+          command: |
+            cd packages/regression_model
+            tox -e py39
+      - run:
+          name: Test ML API with Python 3.9
+          command: |
+            cd packages/ml_api
+            tox -e py39
+      - run:
+          name: Run differential tests
+          command: |
+            cd packages/ml_api
+            virtualenv venv
+            . venv/bin/activate
+            pip install -r diff_test_requirements.txt
+            PYTHONPATH=./ python3 tests/capture_model_predictions.py
+            pip install -r requirements.txt
+            py.test -vv tests -m differential
 
 tags_only: &tags_only
   filters:
@@ -254,53 +300,6 @@ tags_only: &tags_only
       ignore: /.*/
     tags:
       only: /^.*/
-
-combined_job:
-  docker:
-    - image: circleci/python:3.9.5
-  working_directory: ~/project
-  steps:
-    - checkout
-    - run:
-        name: Set up environment
-        command: |
-          sudo pip uninstall -y virtualenv
-          sudo pip install virtualenv
-          sudo pip install --upgrade pip
-          pip install --upgrade poetry
-          pip install --upgrade requests
-          pip install --user tox
-    - run:
-        name: Train and upload regression model
-        command: |
-          cd packages/regression_model
-          virtualenv venv
-          . venv/bin/activate
-          pip install -r requirements.txt
-          tox -e fetch_data
-          PYTHONPATH=./ python3 regression_model/train_pipeline.py
-          chmod +x ../../scripts/publish_model.sh
-          ../../scripts/publish_model.sh .
-    - run:
-        name: Test regression model with Python 3.9
-        command: |
-          cd packages/regression_model
-          tox -e py39
-    - run:
-        name: Test ML API with Python 3.9
-        command: |
-          cd packages/ml_api
-          tox -e py39
-    - run:
-        name: Run differential tests
-        command: |
-          cd packages/ml_api
-          virtualenv venv
-          . venv/bin/activate
-          pip install -r diff_test_requirements.txt
-          PYTHONPATH=./ python3 tests/capture_model_predictions.py
-          pip install -r requirements.txt
-          py.test -vv tests -m differential
 
 workflows:
   version: 2
