@@ -228,7 +228,6 @@ jobs:
     steps:
       - checkout
       - *prepare_tox
-      - *prepare_venv
       - run:
           name: Set up environment
           command: |
