@@ -105,20 +105,15 @@ jobs:
       - checkout:
           path: ~/project
       - run:
-          name: Install requirements and regression model library
-          command: |
-            source venv/bin/activate
-            sudo pip uninstall -y virtualenv
-            sudo pip install virtualenv
-            pip install --upgrade pip
-            pip install --upgrade poetry
-            pip install --upgrade requests
-            pip install --user tox 
-      - run:
           name: Run tests with Python 3.9
           command: |
-            source venv/bin/activate
-            tox -e py39
+              sudo pip uninstall -y virtualenv
+              sudo pip install virtualenv
+              sudo pip install --upgrade pip
+              pip install --upgrade poetry
+              pip install --upgrade requests
+              pip install --user tox 
+              tox -e py39
 
   test_ml_api_py39:
     docker:
