@@ -97,72 +97,73 @@ jobs:
           command: |
             cd section-08-deploying-with-containers && railway up --service=normal-sofa --detach
 
-  """test_regression_model_py39:
-    docker:
-      - image: circleci/python:3.9.5
-    working_directory: ~/project/packages/regression_model
-    steps:
-      - checkout:
-          path: ~/project
-      - run:
-          name: Run tests with Python 3.9
-          command: |
-              sudo pip uninstall -y virtualenv
-              sudo pip install virtualenv
-              sudo pip install --upgrade pip
-              pip install --upgrade poetry
-              pip install --upgrade requests
-              pip install --user tox 
-              tox -e py39"""
+  # Commented out jobs for reference
+  # test_regression_model_py39:
+  #   docker:
+  #     - image: circleci/python:3.9.5
+  #   working_directory: ~/project/packages/regression_model
+  #   steps:
+  #     - checkout:
+  #         path: ~/project
+  #     - run:
+  #         name: Run tests with Python 3.9
+  #         command: |
+  #             sudo pip uninstall -y virtualenv
+  #             sudo pip install virtualenv
+  #             sudo pip install --upgrade pip
+  #             pip install --upgrade poetry
+  #             pip install --upgrade requests
+  #             pip install --user tox 
+  #             tox -e py39
 
-  """test_ml_api_py39:
-    docker:
-      - image: circleci/python:3.9.5
-    working_directory: ~/project/packages/ml_api
-    steps:
-      - checkout:
-          path: ~/project
-      - run:
-            name: Run API tests with Python 3.9
-            command: |
-              sudo pip uninstall -y virtualenv
-              sudo pip install virtualenv
-              sudo pip install --upgrade pip
-              pip install --upgrade poetry
-              pip install --upgrade requests
-              pip install --user tox 
-              tox -e py39"""
+  # test_ml_api_py39:
+  #   docker:
+  #     - image: circleci/python:3.9.5
+  #   working_directory: ~/project/packages/ml_api
+  #   steps:
+  #     - checkout:
+  #         path: ~/project
+  #     - run:
+  #           name: Run API tests with Python 3.9
+  #           command: |
+  #             sudo pip uninstall -y virtualenv
+  #             sudo pip install virtualenv
+  #             sudo pip install --upgrade pip
+  #             pip install --upgrade poetry
+  #             pip install --upgrade requests
+  #             pip install --user tox 
+  #             tox -e py39
 
-  """train_and_upload_regression_model:
-    docker:
-      - image: circleci/python:3.9.5
-    working_directory: ~/project/packages/regression_model
-    steps:
-      - checkout:
-          path: ~/project
-      - *prepare_tox
-      - *prepare_venv
-      - run:
-          name: Install requirements
-          command: |
-            . venv/bin/activate
-            pip install -r requirements.txt
-      - run:
-          name: Fetch data
-          command: |
-            . venv/bin/activate
-            tox -e fetch_data
-      - run:
-          name: Train model
-          command: |
-            . venv/bin/activate
-            PYTHONPATH=./ python3 regression_model/train_pipeline.py
-      - run:
-          name: Publish model to Gemfury
-          command: |
-            . venv/bin/activate
-            chmod +x ../../scripts/publish_model.sh
-            ../../scripts/publish_model.sh ."""
+  # train_and_upload_regression_model:
+  #   docker:
+  #     - image: circleci/python:3.9.5
+  #   working_directory: ~/project/packages/regression_model
+  #   steps:
+  #     - checkout:
+  #         path: ~/project
+  #     - *prepare_tox
+  #     - *prepare_venv
+  #     - run:
+  #         name: Install requirements
+  #         command: |
+  #           . venv/bin/activate
+  #           pip install -r requirements.txt
+  #     - run:
+  #         name: Fetch data
+  #         command: |
+  #           . venv/bin/activate
+  #           tox -e fetch_data
+  #     - run:
+  #         name: Train model
+  #         command: |
+  #           . venv/bin/activate
+  #           PYTHONPATH=./ python3 regression_model/train_pipeline.py
+  #     - run:
+  #         name: Publish model to Gemfury
+  #         command: |
+  #           . venv/bin/activate
+  #           chmod +x ../../scripts/publish_model.sh
+  #           ../../scripts/publish_model.sh .
 
   section_9_differential_tests:
     <<: *defaults
