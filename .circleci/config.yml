@@ -228,6 +228,7 @@ jobs:
     steps:
       - checkout
       - *prepare_tox
+      - *prepare_venv
       - run: 
           name: Install requirements
           command: |
