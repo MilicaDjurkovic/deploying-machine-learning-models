@@ -166,9 +166,13 @@ jobs:
   #           ../../scripts/publish_model.sh .
 
   section_9_differential_tests:
-    <<: *defaults
+    docker:
+      - image: circleci/python:3.9.5
+    working_directory: ~/project/packages/ml_api
     steps:
-      - checkout
+      - checkout:
+           path: ~/project
+      - *prepare_tox
       - *prepare_venv
       - run:
           name: Capturing previous model predictions
@@ -223,6 +227,7 @@ jobs:
     working_directory: ~/project
     steps:
       - checkout
+      - *prepare_tox
       - *prepare_venv
       - run:
           name: Set up environment
