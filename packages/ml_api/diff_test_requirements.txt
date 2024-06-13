@@ -10,4 +10,4 @@ marshmallow==2.17.0
 tid-regression-model==4.0.5
 
 # temporarily necessary as we update sklearn
-joblib>=0.14.1,<0.15.0
+joblib>=1.2.0,<1.3.0
