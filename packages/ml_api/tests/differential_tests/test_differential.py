@@ -2,7 +2,7 @@ import math
 
 from regression_model.config import config as model_config
 from regression_model.predict import make_prediction
-from regression_model.processing.data_management import load_dataset
+from regression_model.processing.data_manager import load_dataset
 import pandas as pd
 import pytest
 
