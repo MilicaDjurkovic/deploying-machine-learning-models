@@ -229,10 +229,6 @@ jobs:
       - checkout
       - *prepare_tox
       - run:
-          name: Set environment variables
-          command: |
-            echo "export CUDA_VISIBLE_DEVICES=" >> $BASH_ENV
-      - run:
           name: Create and activate virtual environment
           command: |
             python -m venv venv
